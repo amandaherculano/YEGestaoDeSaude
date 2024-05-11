@@ -1,15 +1,11 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import Title from './routes/components/Title/examesRealizados';
-import Main from './routes/components/Main/examesRealizados'
-
+import Routes from './screens/routes'
 
 export default function App(){
   return (
-    <View style={styles.container}>
-      <Title/> 
-      <Main/>
-    </View>
+    <Routes/>
   )
 }
 
