@@ -4,14 +4,14 @@ import { AntDesign } from '../node_modules/@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function ExamesRealizados() {
+export default function ResultadoExame() {
     // Definindo os dados dos exames
     const data = [
-        { id: '1', title: 'Hemograma' },
-        { id: '2', title: 'Colesterol Total' },
-        { id: '3', title: 'Glicose' }
+        { id: '1', title: '79 mg/dL' },
+        { id: '2', title: '80 mg/dL' },
+        { id: '3', title: '75 mg/dL' }
     ];
-
+    
     const navigation = useNavigation();
     // Calculando a altura total dos itens
     const totalHeight = data.length * ITEM_HEIGHT;
@@ -25,7 +25,7 @@ export default function ExamesRealizados() {
             {data.map((item, index) => (
                 <View key={item.id} style={[styles.itemContainer, index === data.length - 1 && styles.lastItem]}>
                     <Text style={styles.itemText}>{item.title}</Text>
-                    <Text style={styles.itemData}>12 de abril 2025</Text>
+                    <Text style={styles.itemData}>12 de abril 2024</Text>
                     <TouchableOpacity 
                         style={{
                             position: 'relative',
@@ -37,8 +37,7 @@ export default function ExamesRealizados() {
                             textAlign: 'right'
                         }}
                         onPress={() => {
-                            console.log('Clicou no item', item.title);
-                            navigation.navigate('ResultadoExame');
+                            navigation.navigate('');
                         }}
                     >   
                     <Text style={{ color: '#000', fontSize: 23 }}>{'>'}</Text>
@@ -48,24 +47,6 @@ export default function ExamesRealizados() {
             ))}
         
         </View>
-            <TouchableOpacity 
-                style={{
-                    position: 'relative',
-                    top: 400,
-                    alignSelf: 'center',
-                    backgroundColor: '#5E9A81',
-                    width: 70,
-                    height: 70,
-                    borderRadius: 35,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}
-                onPress={() => {
-                    // Adicione a ação do botão aqui
-                }}
-            >
-                <Text style={{ color: '#fff', fontSize: 50, alignItems: 'center'}}>+</Text>
-            </TouchableOpacity>
         </View>
         
     );
@@ -93,8 +74,9 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 18,
-        fontWeight: 'bold',
-        color: '#5E9A81'
+        color: '#000000',
+        alignItems: 'flex-end',
+        textAlign: 'right'
     },
     itemData: {
         fontSize: 10,
