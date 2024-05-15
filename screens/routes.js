@@ -35,9 +35,6 @@ function Routes() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={screenOptions} initialRouteName='ExamesRealizados'>
-        
-        
-        
         <Tab.Screen
           name='ExamesRealizados'
           component={ExamesRealizados}
