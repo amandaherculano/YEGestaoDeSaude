@@ -7,6 +7,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 
 import { ResultadoExame } from '../screens';
 import { ExamesRealizados } from '../screens';
+import { Tutorial1 } from '../screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,16 +54,16 @@ function Routes() {
                 style={{ marginLeft: 10 }}
               />
             ),
-            tabBarIcon: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} /> */}
-                <FontAwesome6 name="user-doctor" size={24} color="black" />
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
-              </View>
-            )
+            // tabBarIcon: ({ focused }) => (
+            //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            //     {/* <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} /> */}
+            //     <FontAwesome6 name="user-doctor" size={24} color="black" />
+            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
+            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
+            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
+            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
+            //   </View>
+            // )
           })}
         />
         
@@ -94,6 +95,14 @@ function Routes() {
             )
           })}
         />
+
+
+        <Tab.Screen
+          name = 'Tutorial1'
+          component = {Tutorial1}
+          options={{ headerShown: false, footerShown: false }}>
+
+          </Tab.Screen>
 
 
       </Tab.Navigator>

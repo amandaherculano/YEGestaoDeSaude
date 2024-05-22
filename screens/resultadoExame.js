@@ -26,23 +26,6 @@ export default function ResultadoExame() {
                 <View key={item.id} style={[styles.itemContainer, index === data.length - 1 && styles.lastItem]}>
                     <Text style={styles.itemText}>{item.title}</Text>
                     <Text style={styles.itemData}>12 de abril 2024</Text>
-                    <TouchableOpacity 
-                        style={{
-                            position: 'relative',
-                            alignSelf: 'center',
-                            width: 70,
-                            height: 70,
-                            justifyContent: 'center',
-                            alignItems: 'flex-end',
-                            textAlign: 'right'
-                        }}
-                        onPress={() => {
-                            navigation.navigate('');
-                        }}
-                    >   
-                    <Text style={{ color: '#000', fontSize: 23 }}>{'>'}</Text>
-                </TouchableOpacity>
-                   
                 </View>
             ))}
         
