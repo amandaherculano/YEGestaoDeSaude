@@ -5,5 +5,5 @@ import Tutorial1 from "./tutorial1";
 export {
     ExamesRealizados,
     ResultadoExame,
-    Tutorial1
+    Tutorial1,
 };
