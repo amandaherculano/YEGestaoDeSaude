@@ -47,7 +47,7 @@ export default function ExamesRealizados({ navigation } ) {
         <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Text style={styles.backButton}>{'←'}</Text>
+                    <Text style={styles.backButton}>{'←'}</Text>
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Exames Realizados</Text>
                 <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
