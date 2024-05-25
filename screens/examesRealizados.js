@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image, ScrollView } from "react-native";
-
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
 
+
 export default function ExamesRealizados({ navigation } ) {
     const [facing, setFacing] = useState('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [cameraOpen, setCameraOpen] = useState(false); // Adicione esta linha
-
-
     function toggleCameraFacing() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     }
@@ -103,6 +101,7 @@ export default function ExamesRealizados({ navigation } ) {
                 >
                 <Text style={{ color: '#fff', fontSize: 50, alignItems: 'center' }}>+</Text>
             </TouchableOpacity>
+            
             <Modal
                 animationType="slide"
                 transparent={true}
@@ -139,6 +138,7 @@ export default function ExamesRealizados({ navigation } ) {
                 </View>
             </Modal>
         </View>
+
     </ScrollView>
 
     );
