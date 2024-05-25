@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -17,21 +17,29 @@ export default function ResultadoExame() {
     const totalHeight = data.length * ITEM_HEIGHT;
 
     return (
-        <View style={
-            {height: '100%'}
-        }>
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={styles.backButton}>{'←'}</Text>
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Glicose</Text>
+                {/* TODO: titulo variar conforme clica */}
+                <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
+            </View>
 
-        <View style={[styles.container, { height: totalHeight }]}>
+            <View style={
+                {height: '100%'}
+            }>
+
+        <View style={[styles.containerItens, { height: totalHeight }]}>
             {data.map((item, index) => (
                 <View key={item.id} style={[styles.itemContainer, index === data.length - 1 && styles.lastItem]}>
                     <Text style={styles.itemText}>{item.title}</Text>
                     <Text style={styles.itemData}>12 de abril 2024</Text>
                 </View>
-            ))}
-        
+            ))}</View>
         </View>
-        </View>
-        
+    </ScrollView>
     );
 }
 
@@ -40,7 +48,33 @@ export default function ResultadoExame() {
 const ITEM_HEIGHT = 50;
 
 const styles = StyleSheet.create({
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    backButton: {
+        fontSize: 24,
+        color: '#61A186',
+    },
+    headerTitle: {
+        color: '#61A186',
+        fontSize: 28,
+        fontFamily: 'Inter-SemiBold',
+    },
+    logo: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+    },
     container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+        marginTop: 50,
+    },
+    containerItens: {
         paddingHorizontal: 20,
         backgroundColor: "#D9D9D9",
         borderRadius: 10,

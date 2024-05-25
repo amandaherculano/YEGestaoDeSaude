@@ -6,9 +6,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
 
-
-
-
 export default function ExamesRealizados({ navigation } ) {
     const [facing, setFacing] = useState('back');
     const [permission, requestPermission] = useCameraPermissions();
@@ -51,16 +48,16 @@ export default function ExamesRealizados({ navigation } ) {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.backButton}>{'←'}</Text>
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>Exames Realizados</Text>
-            <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
-        </View>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Text style={styles.backButton}>{'←'}</Text>
+                </TouchableOpacity>
+                <Text style={styles.headerTitle}>Exames Realizados</Text>
+                <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
+            </View>
 
-        <View style={
-            { height: '100%' }
-        }>
+            <View style={
+                { height: '100%' }
+            }>
 
             <View style={[styles.containerItens, { height: totalHeight }]}>
                 {data.map((item, index) => (
@@ -103,7 +100,7 @@ export default function ExamesRealizados({ navigation } ) {
                 onPress={() => {
                     setModalVisible(true);
                 }}
-            >
+                >
                 <Text style={{ color: '#fff', fontSize: 50, alignItems: 'center' }}>+</Text>
             </TouchableOpacity>
             <Modal
