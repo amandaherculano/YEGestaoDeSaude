@@ -9,7 +9,7 @@ export default function AfericoesScreen({ navigation }) {
           <Text style={styles.backButton}>{'←'}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Aferições</Text>
-        <Image source={require('../assets/images/logo.png')} style={styles.logo} />
+        <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
       </View>
 
       <View style={styles.description}>
@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
     color: '#61A186',
   },
   headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
     color: '#61A186',
+    fontSize: 28,
+    fontFamily: 'Inter-SemiBold',
   },
   logo: {
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     resizeMode: 'contain',
   },
   description: {

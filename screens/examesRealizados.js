@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image } from "react-native";
-import { AntDesign } from '../node_modules/@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Button, Image, ScrollView } from "react-native";
+
+import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
 
 
 
-export default function ExamesRealizados() {
 
+export default function ExamesRealizados({ navigation } ) {
     const [facing, setFacing] = useState('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [cameraOpen, setCameraOpen] = useState(false); // Adicione esta linha
@@ -45,16 +45,24 @@ export default function ExamesRealizados() {
         { id: '3', title: 'Glicose' }
     ];
 
-    const navigation = useNavigation();
     // Calculando a altura total dos itens
     const totalHeight = data.length * ITEM_HEIGHT;
 
     return (
+        <ScrollView style={styles.container}>
+            <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text style={styles.backButton}>{'←'}</Text>
+            </TouchableOpacity>
+            <Text style={styles.headerTitle}>Exames Realizados</Text>
+            <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
+        </View>
+
         <View style={
             { height: '100%' }
         }>
 
-            <View style={[styles.container, { height: totalHeight }]}>
+            <View style={[styles.containerItens, { height: totalHeight }]}>
                 {data.map((item, index) => (
                     <View key={item.id} style={[styles.itemContainer, index === data.length - 1 && styles.lastItem]}>
                         <Text style={styles.itemText}>{item.title}</Text>
@@ -134,6 +142,7 @@ export default function ExamesRealizados() {
                 </View>
             </Modal>
         </View>
+    </ScrollView>
 
     );
 }
@@ -143,10 +152,7 @@ export default function ExamesRealizados() {
 const ITEM_HEIGHT = 50;
 
 const stylescamera = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-    },
+
     camera: {
       flex: 1,
     },
@@ -169,7 +175,33 @@ const stylescamera = StyleSheet.create({
   });
 
 const styles = StyleSheet.create({
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    backButton: {
+        fontSize: 24,
+        color: '#61A186',
+    },
+    headerTitle: {
+        color: '#61A186',
+        fontSize: 28,
+        fontFamily: 'Inter-SemiBold',
+    },
+    logo: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+    },
     container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+        marginTop: 50,
+    },
+    containerItens: {
         paddingHorizontal: 20,
         backgroundColor: "#D9D9D9",
         borderRadius: 10,

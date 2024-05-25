@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, Text } from 'react-native';
+import { Image, View, Text, TouchableOpacity} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'; //2
 import HomeScreen from '../screens/HomeScreen';
@@ -11,10 +11,10 @@ import SenhaScreen from '../screens/SenhaScreen';
 import CalculoIMC from '../screens/CalculoIMC';
 import PressaoScreen from '../screens/PressaoScreen';
 import GlicemiaScreen from '../screens/GlicemiaScreen';
-
+import { useNavigation } from '@react-navigation/native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
-import { AntDesign } from '@expo/vector-icons';
+import {Ionicons } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { ResultadoExame } from '../screens';
 import { ExamesRealizados } from '../screens';
@@ -24,31 +24,40 @@ const Stack = createStackNavigator(); //2
 
 const Tab = createBottomTabNavigator();
 
-const screenOptions = {
-  headerShown: true,
-  headerRight: () => (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Image
-        style={styles.logoVerdeIcon}
-        source={require("../assets/logo-verde4.png")}
-      />
-    </View>
-  ),
-  tabBarShowLabel: true,
-  tabBarStyle: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    left: 0,
-    elevation: 0,
-    height: 100,
-    backgroundColor: '#749488', 
-  }
-};
+// const navigation = useNavigation();
+// const screenOptions = {
+//   headerShown: true,
+//   headerRight: () => (
+//     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+//       <Image
+//         style={styles.logoVerdeIcon}
+//         source={require("../assets/logo-verde4.png")}
+//       />
+//     </View>
+//   ),
+//   headerLeft: () => (
+//     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+//       <TouchableOpacity onPress={() => navigation.goBack()}>
+//           <Text style={styles.backButton}>{'←'}</Text>
+//         </TouchableOpacity>
+//     </View>
+    
+//   ),
+//   tabBarShowLabel: true,
+//   tabBarStyle: {
+//     position: 'absolute',
+//     bottom: 0,
+//     right: 0,
+//     left: 0,
+//     elevation: 0,
+//     height: 100,
+//     backgroundColor: '#749488', 
+//   }
+// };
 
 export default function Routes() {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator /*screenOptions={screenOptions} */initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Afericoes" component={AfericoesScreen} options={{ headerShown: false }} />
@@ -59,55 +68,23 @@ export default function Routes() {
       <Stack.Screen name="CalculoIMC" component={CalculoIMC} options={{ headerShown: false }} />
       <Stack.Screen name="PressaoArterial" component={PressaoScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Glicemia" component={GlicemiaScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ExamesRealizados" component={ExamesRealizados} options={{ headerShown: false }} />
+      <Stack.Screen name="ResultadoExame" component={ResultadoExame} options={{ headerShown: false }} />
+      <Stack.Screen name = 'Tutorial1'component = {Tutorial1} options={{ headerShown: false, footerShown: false }}/>      
 
-      <Stack.Screen
+
+
+
+      {/* <Stack.Screen 
           name='ExamesRealizados'
           component={ExamesRealizados}
-          options={({ navigation }) => ({
+          options={() => ({
             headerTitle: () => (
               <Text style={styles.headerTitle}>Exames Realizados</Text>
             ),
-            headerLeft: () => (
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color="black"
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 10 }}
-              />
-            ),
-            // tabBarIcon: ({ focused }) => (
-            //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            //     {/* <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} /> */}
-            //     <FontAwesome6 name="user-doctor" size={24} color="black" />
-            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
-            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
-            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
-            //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
-            //   </View>
-            // )
-          })}
-        />
-        
-        <Stack.Screen
-          name='ResultadoExame'
-          component={ResultadoExame}
-          options={({ navigation }) => ({
-            headerTitle: () => (
-              <Text style={styles.headerTitle}>Glicose</Text>
-            ),
-            headerLeft: () => (
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color="black"
-                onPress={() => navigation.goBack()}
-                style={{ marginLeft: 10 }}
-              />
-            ),
             tabBarIcon: ({ focused }) => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} /> */}
+                <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} />
                 <FontAwesome6 name="user-doctor" size={24} color="black" />
                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
@@ -116,12 +93,28 @@ export default function Routes() {
               </View>
             )
           })}
-        /> 
-        <Stack.Screen
-          name = 'Tutorial1'
-          component = {Tutorial1}
-          options={{ headerShown: false, footerShown: false }}>
-          </Stack.Screen>      
+        /> */}
+        
+        {/* <Stack.Screen
+          name='ResultadoExame'
+          component={ResultadoExame}
+          options={({ navigation }) => ({
+            headerTitle: () => (
+              <Text style={styles.headerTitle}>Glicose</Text>
+            ),
+            tabBarIcon: ({ focused }) => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} />
+                <FontAwesome6 name="user-doctor" size={24} color="black" />
+                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
+                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
+                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
+                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
+              </View>
+            )
+          })}
+        />  */}
+        
     </Stack.Navigator>
   );
 }
@@ -210,13 +203,18 @@ export default function Routes() {
 // }
 
 const styles = {
+  backButton: {
+    fontSize: 24,
+    color: '#61A186',
+    marginLeft: 10,
+  },
   logoVerdeIcon: {
     width: 30,
     height: 30,
     marginRight: 10
   },
   headerTitle: {
-    color: '#749488',
+    color: '#61A186',
     fontSize: 27,
     fontFamily: 'Inter-SemiBold',
   },
