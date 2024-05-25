@@ -11,13 +11,7 @@ export default function ConsultasScreen({ navigation }) {
     date: '',
     time: ''
   });
-  const data = [
-    { id: '1', title: 'Hemograma' },
-    { id: '2', title: 'Colesterol Total' },
-    { id: '3', title: 'Glicose' }
-];
 
-const totalHeight = data.length * ITEM_HEIGHT;
 
   const handleAddConsulta = () => {
     setConsultasEntries([
@@ -50,72 +44,89 @@ const totalHeight = data.length * ITEM_HEIGHT;
         <Image source={require('../assets/logo-verde4.png')} style={styles.logo} />
       </View>
 
-      <View style={[styles.containerItens, { height: totalHeight }]}>
-        
-        <FlatList
-          data={consultasEntries}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          style={styles.list}
-        />
-        <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
-          <Ionicons name="add" size={30} color="#FFF" />
-        </TouchableOpacity>
+    
+      <View style={
+                { height: '100%' }
+      }>
 
-        <Modal
-          visible={modalVisible}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Adicionar Consulta</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Consulta"
-                value={newConsulta.consulta}
-                onChangeText={(text) => setNewConsulta({ ...newConsulta, consulta: text })}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Data"
-                value={newConsulta.date}
-                onChangeText={(text) => setNewConsulta({ ...newConsulta, date: text })}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Hora"
-                value={newConsulta.time}
-                onChangeText={(text) => setNewConsulta({ ...newConsulta, time: text })}
-              />
-              <Button title="Adicionar" onPress={handleAddConsulta} />
-              <Button title="Cancelar" onPress={() => setModalVisible(false)} />
-            </View>
+      <FlatList
+        data={consultasEntries}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        style={styles.list}
+      />
+      <TouchableOpacity
+                style={{
+                    position: 'relative',
+                    top: 400,
+                    alignSelf: 'center',
+                    backgroundColor: '#5E9A81',
+                    width: 70,
+                    height: 70,
+                    borderRadius: 35,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+                onPress={() => {
+                    setModalVisible(true);
+                }}
+                >
+                <Text style={{ color: '#fff', fontSize: 50, alignItems: 'center' }}>+</Text>
+      </TouchableOpacity>
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Adicionar Consulta</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Consulta"
+              value={newConsulta.consulta}
+              onChangeText={(text) => setNewConsulta({ ...newConsulta, consulta: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Data"
+              value={newConsulta.date}
+              onChangeText={(text) => setNewConsulta({ ...newConsulta, date: text })}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Hora"
+              value={newConsulta.time}
+              onChangeText={(text) => setNewConsulta({ ...newConsulta, time: text })}
+            />
+            <Button title="Adicionar" onPress={handleAddConsulta} />
+            <Button title="Cancelar" onPress={() => setModalVisible(false)} />
           </View>
-        </Modal>
+        </View>
+      </Modal>
 
-        <Modal
-          visible={!!selectedConsulta}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => setSelectedConsulta(null)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Detalhes da Consulta</Text>
-              {selectedConsulta && (
-                <>
-                  <Text>Consulta: {selectedConsulta.consulta}</Text>
-                  <Text>Data: {selectedConsulta.date}</Text>
-                  <Text>Hora: {selectedConsulta.time}</Text>
-                  <Button title="Excluir" onPress={() => handleDeleteConsulta(selectedConsulta.id)} />
-                  <Button title="Fechar" onPress={() => setSelectedConsulta(null)} />
-                </>
-              )}
-            </View>
+      <Modal
+        visible={!!selectedConsulta}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setSelectedConsulta(null)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Detalhes da Consulta</Text>
+            {selectedConsulta && (
+              <>
+                <Text>Consulta: {selectedConsulta.consulta}</Text>
+                <Text>Data: {selectedConsulta.date}</Text>
+                <Text>Hora: {selectedConsulta.time}</Text>
+                <Button title="Excluir" onPress={() => handleDeleteConsulta(selectedConsulta.id)} />
+                <Button title="Fechar" onPress={() => setSelectedConsulta(null)} />
+              </>
+            )}
           </View>
-        </Modal>
+        </View>
+      </Modal>
       </View>
     </ScrollView>
   );
@@ -149,14 +160,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     marginTop: 50,
-  } ,
+},
   containerItens: {
     paddingHorizontal: 20,
     backgroundColor: "#D9D9D9",
     borderRadius: 10,
     margin: 10,
-},
-itemContainer: {
+  },
+  itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -164,13 +175,13 @@ itemContainer: {
     borderBottomWidth: 1,
     borderBottomColor: 'white',
     paddingHorizontal: 10
-},
-itemText: {
+  },
+  itemText: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#5E9A81'
-},
-itemData: {
+  },
+  itemData: {
     fontSize: 10,
     color: '#6F6F6F',
     alignItems: 'flex-end',
