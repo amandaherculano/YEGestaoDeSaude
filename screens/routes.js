@@ -24,25 +24,7 @@ const Stack = createStackNavigator(); //2
 
 const Tab = createBottomTabNavigator();
 
-// const navigation = useNavigation();
-// const screenOptions = {
-//   headerShown: true,
-//   headerRight: () => (
-//     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//       <Image
-//         style={styles.logoVerdeIcon}
-//         source={require("../assets/logo-verde4.png")}
-//       />
-//     </View>
-//   ),
-//   headerLeft: () => (
-//     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//       <TouchableOpacity onPress={() => navigation.goBack()}>
-//           <Text style={styles.backButton}>{'←'}</Text>
-//         </TouchableOpacity>
-//     </View>
-    
-//   ),
+//   
 //   tabBarShowLabel: true,
 //   tabBarStyle: {
 //     position: 'absolute',
@@ -57,12 +39,11 @@ const Tab = createBottomTabNavigator();
 
 export default function Routes() {
   return (
-    <Stack.Navigator /*screenOptions={screenOptions} */initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Afericoes" component={AfericoesScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Consultas" component={ConsultasScreen} options={{ headerShown: false }} />
-      {/* <Stack.Screen name="Exames" component={ExamesRealizados} options={{ headerShown: false }} /> */}
       <Stack.Screen name="Cadastro" component={CadastroScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Senha" component={SenhaScreen} options={{ headerShown: false }} />
       <Stack.Screen name="CalculoIMC" component={CalculoIMC} options={{ headerShown: false }} />
@@ -72,16 +53,7 @@ export default function Routes() {
       <Stack.Screen name="ResultadoExame" component={ResultadoExame} options={{ headerShown: false }} />
       <Stack.Screen name = 'Tutorial1'component = {Tutorial1} options={{ headerShown: false, footerShown: false }}/>      
 
-
-
-
-      {/* <Stack.Screen 
-          name='ExamesRealizados'
-          component={ExamesRealizados}
-          options={() => ({
-            headerTitle: () => (
-              <Text style={styles.headerTitle}>Exames Realizados</Text>
-            ),
+      {/*
             tabBarIcon: ({ focused }) => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} />
@@ -91,117 +63,12 @@ export default function Routes() {
                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
               </View>
-            )
-          })}
-        /> */}
-        
-        {/* <Stack.Screen
-          name='ResultadoExame'
-          component={ResultadoExame}
-          options={({ navigation }) => ({
-            headerTitle: () => (
-              <Text style={styles.headerTitle}>Glicose</Text>
-            ),
-            tabBarIcon: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} />
-                <FontAwesome6 name="user-doctor" size={24} color="black" />
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
-                <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
-              </View>
-            )
-          })}
-        />  */}
+            */}
+      
         
     </Stack.Navigator>
   );
 }
-
-
-
-
-
-
-
-// function Routes() {
-//   return (
-//     <NavigationContainer>
-//       <Stack.Navigator screenOptions={screenOptions} initialRouteName='ExamesRealizados'>
-
-//         <Stack.Screen
-//           name='ExamesRealizados'
-//           component={ExamesRealizados}
-//           options={({ navigation }) => ({
-//             headerTitle: () => (
-//               <Text style={styles.headerTitle}>Exames Realizados</Text>
-//             ),
-//             headerLeft: () => (
-//               <AntDesign
-//                 name="arrowleft"
-//                 size={24}
-//                 color="black"
-//                 onPress={() => navigation.goBack()}
-//                 style={{ marginLeft: 10 }}
-//               />
-//             ),
-//             // tabBarIcon: ({ focused }) => (
-//             //   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//             //     {/* <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} /> */}
-//             //     <FontAwesome6 name="user-doctor" size={24} color="black" />
-//             //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
-//             //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
-//             //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
-//             //     <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
-//             //   </View>
-//             // )
-//           })}
-//         />
-        
-//         <Stack.Screen
-//           name='ResultadoExame'
-//           component={ResultadoExame}
-//           options={({ navigation }) => ({
-//             headerTitle: () => (
-//               <Text style={styles.headerTitle}>Glicose</Text>
-//             ),
-//             headerLeft: () => (
-//               <AntDesign
-//                 name="arrowleft"
-//                 size={24}
-//                 color="black"
-//                 onPress={() => navigation.goBack()}
-//                 style={{ marginLeft: 10 }}
-//               />
-//             ),
-//             tabBarIcon: ({ focused }) => (
-//               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-//                 {/* <Image source={require('../assets/icone-exame1@3x.png')} style={{width: 30, height: 30}} /> */}
-//                 <FontAwesome6 name="user-doctor" size={24} color="black" />
-//                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Consultas</Text>
-//                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Medicamentos</Text>
-//                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000', marginRight: 20 }]}>Aferições</Text>
-//                 <Text style={[styles.tabText, { color: focused ? '#FFFFFF' : '#000000' }]}>Exames</Text>
-//               </View>
-//             )
-//           })}
-//         />
-
-
-//         <Stack.Screen
-//           name = 'Tutorial1'
-//           component = {Tutorial1}
-//           options={{ headerShown: false, footerShown: false }}>
-
-//           </Stack.Screen>
-
-
-//       </Stack.Navigator>
-//     </NavigationContainer>
-//   );
-// }
-
 const styles = {
   backButton: {
     fontSize: 24,
