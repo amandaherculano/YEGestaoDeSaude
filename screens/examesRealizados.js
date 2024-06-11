@@ -25,10 +25,10 @@ export default function ExamesRealizados({ navigation } ) {
     
     // Access your API key as an environment variable (see "Set up your API key" above)
     const genAI = new GoogleGenerativeAI("AIzaSyDiw97dJnUMnmqLZOHNx3QYIWx1ka6kzg0");
-
+    const [itens, setItens] = useState([]);
     const funcall = async (imageUri) => {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
-        const prompt = "Anilise results of the exam Hemograma like a table and send me the results. Show ok for wich line if is in normal range";
+        const prompt = "List per line NAME Exam result number and parameters, analise per line if the result is in range and if is write OK after the paramters";
 
         // Lendo o arquivo da imagem
         const image = await FileSystem.readAsStringAsync(imageUri, { encoding: FileSystem.EncodingType.Base64 });
@@ -39,10 +39,27 @@ export default function ExamesRealizados({ navigation } ) {
                 mimeType: "image/jpeg",
             },
         };
-
+        
         const result = await model.generateContent([prompt, imageUpload]);
         console.log(result.response.text());
+
+        let linhas = result.response.text().split('\n');
+        let itens = linhas.map((linha, index) => {
+        let [title, ...rest] = linha.split(' ');
+        let result = title;
+        let parameters = rest.join(' ');
+        return {
+            id: String(index),
+            title,
+            result,
+            parameters
+        };
+});
+console.log(itens);
+setItens(itens);
+
     }
+    
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -52,8 +69,6 @@ export default function ExamesRealizados({ navigation } ) {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.canceled) {
             setImage(result.assets[0].uri);
             funcall(result.assets[0].uri); // Chama a função funcall passando a URI da imagem
@@ -62,14 +77,12 @@ export default function ExamesRealizados({ navigation } ) {
     
     const [modalVisible, setModalVisible] = useState(false);
     // Definindo os dados dos exames
-    const data = [
-        { id: '1', title: 'Hemograma' },
-        { id: '2', title: 'Colesterol Total' },
-        { id: '3', title: 'Glicose' }
-    ];
+    // const data = [
+    //     iten in itens
+    // ];
 
     // Calculando a altura total dos itens
-    const totalHeight = data.length * ITEM_HEIGHT;
+    const totalHeight = itens.length * ITEM_HEIGHT;
 
     return (
         <ScrollView style={styles.container}>
@@ -86,8 +99,8 @@ export default function ExamesRealizados({ navigation } ) {
         }>
 
             <View style={[styles.containerItens, { height: totalHeight }]}>
-                {data.map((item, index) => (
-                    <View key={item.id} style={[styles.itemContainer, index === data.length - 1 && styles.lastItem]}>
+                {itens.map((item, index) => (
+                    <View key={item.id} style={[styles.itemContainer, index === itens.length - 1 && styles.lastItem]}>
                         <Text style={styles.itemText}>{item.title}</Text>
                         <TouchableOpacity
                             style={{
@@ -114,7 +127,7 @@ export default function ExamesRealizados({ navigation } ) {
             <TouchableOpacity
                 style={{
                     position: 'relative',
-                    top: 400,
+                    top: 250,
                     alignSelf: 'center',
                     backgroundColor: '#5E9A81',
                     width: 70,
@@ -141,26 +154,45 @@ export default function ExamesRealizados({ navigation } ) {
                     <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
                         <Button title="Importar Imagem" onPress={() => {
                             pickImage();
+                            
                             // TODO - Implementar a importação de imagens
                             { image && <Image source={{ uri: image }} /> }
+                            {setModalVisible(false);
+                                setCameraOpen(false)}
                         }} />
                         <Button title="Importar Documento" onPress={() => {
-                            DocumentPicker.getDocumentAsync(); 
+                            DocumentPicker.getDocumentAsync().then((result) => {
+                                console.log(result);
+                                if (result.type === 'success' && result.uri) {
+                                    funcall(result.uri); // Chama a função funcall passando a URI do documento
+                                } else {
+                                    console.error('Erro: URI do documento é nulo');
+                                }
+                            });
                             // TODO - Implementar a importação de documentos
                          }} />
                         <Button title="Câmera" onPress={async () => { 
-                            let result = await ImagePicker.launchCameraAsync({
-                                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                                allowsEditing: true,
-                                aspect: [4, 3],
-                                quality: 1,
-                            });
+                            if (permission === null) {
+                                requestPermission();
+                            } else if (permission === false) {
+                                alert('Sem permissão para acessar a câmera');
+                            } else {
+                                let result = await ImagePicker.launchCameraAsync({
+                                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                                    allowsEditing: true,
+                                    aspect: [4, 3],
+                                    quality: 1,
+                                });
 
-                            if (!result.canceled) {
-                                setImage(result.uri);
-                                funcall(result.uri); // Chama a função funcall passando a URI da imagem
-                            }
-                        }} />
+                                if (!result.canceled) {
+                                    if (result.uri) {
+                                        setImage(result.assets[0].uri);
+                                        funcall(result.assets[0].uri);
+                                    } else {
+                                        console.error('Erro: URI da imagem é nulo');
+                                    }
+                                }
+                        }}} />
                         <Button title="Fechar" onPress={() => 
                             {setModalVisible(false);
                             setCameraOpen(false)}} />
