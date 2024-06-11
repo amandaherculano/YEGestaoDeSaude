@@ -8,7 +8,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 
 
-export default function ExamesRealizados({ navigation } ) {
+export default function ExamesRealizados({ navigation} ) {
     const [facing, setFacing] = useState('back');
     const [permission, requestPermission] = useCameraPermissions();
     const [cameraOpen, setCameraOpen] = useState(false); // Adicione esta linha
@@ -51,12 +51,11 @@ export default function ExamesRealizados({ navigation } ) {
         return {
             id: String(index),
             title,
-            result,
             parameters
         };
-});
-console.log(itens);
-setItens(itens);
+        });
+        console.log(itens);
+        setItens(itens);
 
     }
     
@@ -76,12 +75,6 @@ setItens(itens);
     };
     
     const [modalVisible, setModalVisible] = useState(false);
-    // Definindo os dados dos exames
-    // const data = [
-    //     iten in itens
-    // ];
-
-    // Calculando a altura total dos itens
     const totalHeight = itens.length * ITEM_HEIGHT;
 
     return (
@@ -113,8 +106,9 @@ setItens(itens);
                                 textAlign: 'right'
                             }}
                             onPress={() => {
+                                itemClicado = item;
                                 console.log('Clicou no item', item.title);
-                                navigation.navigate('ResultadoExame');
+                                navigation.navigate('ResultadoExame', { itemClicado: item }, {itens: itens});
                             }}
                         >
                             <Text style={{ color: '#000', fontSize: 23 }}>{'>'}</Text>
@@ -127,7 +121,7 @@ setItens(itens);
             <TouchableOpacity
                 style={{
                     position: 'relative',
-                    top: 250,
+                    top: 300,
                     alignSelf: 'center',
                     backgroundColor: '#5E9A81',
                     width: 70,
