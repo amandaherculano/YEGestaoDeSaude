@@ -5,8 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
-
-
+import * as FileSystem from 'expo-file-system';
 
 
 export default function ExamesRealizados({ navigation } ) {
@@ -21,8 +20,31 @@ export default function ExamesRealizados({ navigation } ) {
 
     const [image, setImage] = useState(null);
 
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+    // const fs = require("fs");
+    
+    // Access your API key as an environment variable (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI("AIzaSyDiw97dJnUMnmqLZOHNx3QYIWx1ka6kzg0");
+
+    const funcall = async (imageUri) => {
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+        const prompt = "Anilise results of the exam Hemograma like a table and send me the results. Show ok for wich line if is in normal range";
+
+        // Lendo o arquivo da imagem
+        const image = await FileSystem.readAsStringAsync(imageUri, { encoding: FileSystem.EncodingType.Base64 });
+
+        const imageUpload = {
+            inlineData: {
+                data: image,
+                mimeType: "image/jpeg",
+            },
+        };
+
+        const result = await model.generateContent([prompt, imageUpload]);
+        console.log(result.response.text());
+    }
+
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -34,9 +56,10 @@ export default function ExamesRealizados({ navigation } ) {
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
+            funcall(result.assets[0].uri); // Chama a função funcall passando a URI da imagem
         }
     };
-
+    
     const [modalVisible, setModalVisible] = useState(false);
     // Definindo os dados dos exames
     const data = [
@@ -125,16 +148,19 @@ export default function ExamesRealizados({ navigation } ) {
                             DocumentPicker.getDocumentAsync(); 
                             // TODO - Implementar a importação de documentos
                          }} />
-                        <Button title="Câmera" onPress={() => { 
-                            ImagePicker.launchCameraAsync({
+                        <Button title="Câmera" onPress={async () => { 
+                            let result = await ImagePicker.launchCameraAsync({
                                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                                 allowsEditing: true,
                                 aspect: [4, 3],
                                 quality: 1,
                             });
-                            // TODO - Implementar a captura de imagens
 
-                         }} />
+                            if (!result.canceled) {
+                                setImage(result.uri);
+                                funcall(result.uri); // Chama a função funcall passando a URI da imagem
+                            }
+                        }} />
                         <Button title="Fechar" onPress={() => 
                             {setModalVisible(false);
                             setCameraOpen(false)}} />
